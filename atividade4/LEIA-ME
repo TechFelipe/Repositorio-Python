@@ -1,0 +1,21 @@
+Aula 4
+
+Projeto Flask com menu lateral
+
+Criar dentro da pasta Aula 4 duas pastas 
+static e templates
+
+-- static
+Para css, figuras, gravuras, coisas estatísticas que não mudam
+--> Dentro de static crio a pasta css
+     -> Dentro da pasta css crio o style.css para que eu possa inserir meu css
+
+--templates
+ -> Dentro de templates insiro 
+      -> index.html 
+      -> layout.html
+      -> page1.html
+      -> page2.html
+      -> page3.html
+
+

@@ -1,4 +1,6 @@
-from models import ClienteLocadora, Veiculo, db
+from datetime import date
+
+from models import ClienteLocadora, Locacao, Veiculo, db
 
 
 def popular_dados():
@@ -14,4 +16,14 @@ def popular_dados():
         Veiculo(placa="XYZ-9K87", modelo="Hyundai HB20", diaria=135.0),
     ]
     db.session.add_all(clientes + veiculos)
+    db.session.commit()
+
+    locacao = Locacao(
+        cliente_id=clientes[0].id,
+        veiculo_id=veiculos[0].id,
+        data_inicio=date(2026, 7, 1),
+        data_fim=date(2026, 7, 5),
+        valor_total=480.0,
+    )
+    db.session.add(locacao)
     db.session.commit()

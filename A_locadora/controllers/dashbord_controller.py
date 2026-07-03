@@ -1,9 +1,15 @@
-from flask import Blueprint, render_tamplate
-from models import locacao, veiculo
+from flask import Blueprint, render_template
 
-loc_bp = Blueprint ("dashboard", __name__)
+from models import ClienteLocadora, Locacao, Veiculo
 
-@loc_bp.route("/")
+dashboard_bp = Blueprint("dashboard", __name__)
+
+
+@dashboard_bp.route("/")
 def index():
-    "index.html"
-    return render_template("index.html", total_veiculos = veiculos.query.count())
+    return render_template(
+        "locadora/Index.html",
+        total_clientes=ClienteLocadora.query.count(),
+        total_veiculos=Veiculo.query.count(),
+        total_locacoes=Locacao.query.count(),
+    )

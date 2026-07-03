@@ -7,15 +7,20 @@
 <form method="POST" action="{{ url_for('locadora.cadastrar') }}">
     <div class="form-grupo">
         <label>Cliente</label>
-        <!-- TODO ALUNO: select com for c in clientes -->
         <select name="cliente_id" required>
             <option value="">Selecione...</option>
+            {% for c in clientes %}
+            <option value="{{ c.id }}">{{ c.nome }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="form-grupo">
         <label>Veículo</label>
         <select name="veiculo_id" required>
             <option value="">Selecione...</option>
+            {% for v in veiculos %}
+            <option value="{{ v.id }}">{{ v.modelo }} ({{ v.placa }})</option>
+            {% endfor %}
         </select>
     </div>
     <div class="form-grupo">

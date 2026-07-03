@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 
-from controllers import dashbord_controller, locadora_controller
+from controllers import dashboard_bp, locadora_bp
 from dados_iniciais import popular_dados
 from models import db
 

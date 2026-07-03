@@ -7,12 +7,10 @@ class ClienteLocadora(ModeloBase):
     __tablename__ = "clientes_locadora"
 
     nome = db.Column(db.String(120), nullable=False)
-    # TODO ALUNO: cpf e cnh
-    # cpf = db.Column(...)
-    # cnh = db.Column(...)
+    cpf = db.Column(db.String(14), nullable=False, unique=True)
+    cnh = db.Column(db.String(20), nullable=False)
 
-    # TODO ALUNO: relationship com Locacao
-    # locacoes = db.relationship("Locacao", back_populates="cliente")
+    locacoes = db.relationship("Locacao", back_populates="cliente")
 
     @classmethod
     def listar(cls):

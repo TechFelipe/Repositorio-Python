@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}Painel — Locadora{% endblock %}
+
+{% block content %}
+<h1>Locadora de Veículos</h1>
+<p class="subtitulo">Cenário A — ModeloBase + FK + MVC (resolvido)</p>
+
+<div class="cards">
+    <div class="card">
+        <span class="card-num">{{ total_clientes }}</span>
+        <span class="card-label">Clientes</span>
+    </div>
+    <div class="card">
+        <span class="card-num">{{ total_veiculos }}</span>
+        <span class="card-label">Veículos</span>
+    </div>
+    <div class="card">
+        <span class="card-num">{{ total_locacoes }}</span>
+        <span class="card-label">Locações</span>
+    </div>
+</div>
+
+<p><a class="btn" href="{{ url_for('locadora.index') }}">Ver locações</a></p>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block title %}Nova locação{% endblock %}
+
+{% block content %}
+<h1>Nova locação</h1>
+
+<form method="POST" action="{{ url_for('locadora.cadastrar') }}">
+    <div class="form-grupo">
+        <label>Cliente</label>
+        <!-- TODO ALUNO: select com for c in clientes -->
+        <select name="cliente_id" required>
+            <option value="">Selecione...</option>
+        </select>
+    </div>
+    <div class="form-grupo">
+        <label>Veículo</label>
+        <select name="veiculo_id" required>
+            <option value="">Selecione...</option>
+        </select>
+    </div>
+    <div class="form-grupo">
+        <label>Data início</label>
+        <input type="date" name="data_inicio" required>
+    </div>
+    <div class="form-grupo">
+        <label>Data fim</label>
+        <input type="date" name="data_fim" required>
+    </div>
+    <div class="form-grupo">
+        <label>Valor total (R$)</label>
+        <input type="number" name="valor_total" step="any" min="0" required>
+    </div>
+    <button type="submit">Salvar</button>
+</form>
+
+<p><a href="{{ url_for('locadora.index') }}">← Voltar</a></p>
+{% endblock %}

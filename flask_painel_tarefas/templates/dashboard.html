@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - TaskPanel{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+        <h1 class="fw-bold mb-1">Dashboard</h1>
+        <p class="text-secondary mb-0">Gerencie suas tarefas e acompanhe seu progresso.</p>
+    </div>
+    <a href="{{ url_for('nova_tarefa') }}" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Nova tarefa
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-lightbulb-fill text-warning fs-3"></i>
+            <div>
+                <h5 class="fw-bold mb-1">Frase motivacional</h5>
+                <p class="mb-0 fst-italic">“{{ frase_motivacional }}”</p>
+                <small class="text-secondary">Fonte: Advice Slip API</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                    <h4 class="fw-bold mb-0"><i class="bi bi-list-check"></i> Minhas tarefas</h4>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="statusFilter" class="small text-secondary">Filtrar:</label>
+                        <select id="statusFilter" class="form-select form-select-sm">
+                            <option value="">Todas</option>
+                            <option value="Pendente">Pendentes</option>
+                            <option value="Em andamento">Em andamento</option>
+                            <option value="Concluída">Concluídas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="taskList">
+                    {% for tarefa in tarefas %}
+                    <div class="task-card status-{{ tarefa['status']|lower|replace(' ', '-') }}" data-task-id="{{ tarefa['id'] }}">
+                        <div class="d-flex justify-content-between align-items-start gap-3">
+                            <div>
+                                <h5 class="fw-bold mb-1">{{ tarefa['titulo'] }}</h5>
+                                <p class="text-secondary mb-2">{{ tarefa['descricao'] or 'Sem descrição.' }}</p>
+                                <span class="badge status-badge">{{ tarefa['status'] }}</span>
+                            </div>
+
+                            <div class="d-flex gap-1">
+                                <a href="{{ url_for('editar', id=tarefa['id']) }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+                                <form method="POST" action="{{ url_for('excluir', id=tarefa['id']) }}" onsubmit="return confirm('Excluir esta tarefa?')">
+                                    <button class="btn btn-sm btn-outline-danger" title="Excluir">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div id="emptyState" class="text-center py-5 text-secondary">
+                        <i class="bi bi-inbox display-5"></i>
+                        <p class="mt-2 mb-0">Nenhuma tarefa cadastrada.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div id="filterLoading" class="text-center d-none py-3">
+                    <div class="spinner-border spinner-border-sm text-primary"></div>
+                    Carregando...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <h4 class="fw-bold mb-3"><i class="bi bi-bar-chart"></i> Progresso</h4>
+                <canvas id="progressChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-secondary">
+    <i class="bi bi-info-circle"></i>
+    O filtro acima consulta uma rota Flask que retorna JSON e atualiza somente a lista, sem recarregar a página.
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.initialTasks = {{ tarefas|list|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
